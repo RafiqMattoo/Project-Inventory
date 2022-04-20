@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Inventory.Core
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [Controller]
     public class BaseController : ControllerBase
     {
     }

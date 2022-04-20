@@ -1,11 +1,15 @@
 using Inventory.Implementation;
+using Inventory.Implementation.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,8 +21,11 @@ namespace Inventory.UI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-           
-           
+            new DependancyManager().InjectDependencies(services);
+            string appsettingFile = "appsettings.json";
+             
+            services.AddControllersWithViews();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,15 +35,20 @@ namespace Inventory.UI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
             app.UseRouting();
 
+            
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Category}/{action=Index}/{id?}");
             });
         }
     }

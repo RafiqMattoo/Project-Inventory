@@ -18,7 +18,7 @@ namespace Inventory.Core.Controllers
             _config = Config;
             _categoryService = categoryService;
         }
-        public IActionResult Index()
+        public ViewResult Index()
         {
             var data = _categoryService.GetCategoryList();
             return View();
