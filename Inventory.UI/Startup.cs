@@ -1,8 +1,10 @@
+using Inventory.DataAccess;
 using Inventory.Implementation;
 using Inventory.Implementation.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,13 +19,18 @@ namespace Inventory.UI
 {
     public class Startup
     {
+        private IConfiguration _config;
+        public Startup(IConfiguration configuration)
+        {
+            _config = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             new DependancyManager().InjectDependencies(services);
-            string appsettingFile = "appsettings.json";
-             
+            //string appsettingFile = "appsettings.json";
+            services.AddDbContextPool<Inventory_ManagementContext>(options => options.UseSqlServer(_config.GetConnectionString("Default Connection")));
             services.AddControllersWithViews();
 
         }
@@ -48,7 +55,7 @@ namespace Inventory.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Category}/{action=Index}/{id?}");
+                    pattern: "{controller=TbCategories}/{action=Index}/{id?}");
             });
         }
     }
