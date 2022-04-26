@@ -15,17 +15,16 @@ namespace Inventory.DataAccess
         {
         }
 
-        public virtual DbSet<TbCategory> TbCategories { get; set; }
-        public virtual DbSet<TbProduct> TbProducts { get; set; }
-        public virtual DbSet<TbSubCategory> TbSubCategories { get; set; }
-        public virtual DbSet<TbUser> TbUsers { get; set; }
+        public virtual DbSet<TbCategory> Category { get; set; }
+        public virtual DbSet<TbProduct> Product { get; set; }
+        public virtual DbSet<TbSubCategory> SubCategory { get; set; }
+        public virtual DbSet<TbUser> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server= 70.98.204.222; Database= Inventory_Management; User Id = InventoryAdmin ;  Password=  InvenPwd$#54@");
+            {               
+             optionsBuilder.UseSqlServer("Server= 70.98.204.222; Database= Inventory_Management; User Id = InventoryAdmin ;  Password=  InvenPwd$#54@");
             }
         }
 
@@ -104,7 +103,7 @@ namespace Inventory.DataAccess
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Category)
-                    .WithMany(p => p.TbSubCategories)
+                    .WithMany(p => p.SubCategory)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tbSubCategory_tbCategory");

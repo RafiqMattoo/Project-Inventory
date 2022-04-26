@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Inventory.DataAccess.TbCategory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Category List:</h1>
+<hr>
+
+
+<table class="table caption-top">
+    <thead>
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th scope="col"> 
+                @Html.DisplayNameFor(model => model.CategoryDescription)
+            </th>
+           
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.CategoryDescription)
+            </td>
+          
+            <td scope="row">
+                <a asp-action="Edit"  class="btn btn-link text-success" asp-route-id="@item.CategoryId">Edit</a> |
+                <a asp-action="Details"  class="btn btn-link text-success" asp-route-id="@item.CategoryId">Details</a> |
+                <form asp-action="Delete" class="btn btn-link text-success" asp-route-id="@item.CategoryId" >
+                    <input type="hidden" asp-for="@item.CategoryId" />
+                    <a  class="btn btn-link"> <input type="submit" class="btn btn-link text-success" value="Delete" onclick=" return confirm('Are you sure to you want to delete @item.CategoryId?')" />  </a>  
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a class="btn btn-danger btn-lg " asp-action="Create">Create New</a>
+</p>
+

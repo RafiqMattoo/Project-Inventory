@@ -10,7 +10,7 @@ namespace Inventory.DataAccess
         public TbCategory()
         {
             TbProducts = new HashSet<TbProduct>();
-            TbSubCategories = new HashSet<TbSubCategory>();
+            SubCategory = new HashSet<TbSubCategory>();
         }
 
         public int CategoryId { get; set; }
@@ -24,6 +24,6 @@ namespace Inventory.DataAccess
         public DateTime? ModifiedOn { get; set; }
 
         public virtual ICollection<TbProduct> TbProducts { get; set; }
-        public virtual ICollection<TbSubCategory> TbSubCategories { get; set; }
+        public virtual ICollection<TbSubCategory> SubCategory { get; set; }
     }
 }
